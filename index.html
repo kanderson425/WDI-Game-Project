@@ -4,9 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Canvas Resize</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script defer src="js/canvas.js"></script>
+    <style>
+        @font-face {font-family: DriftType; src: url('Drifttype.ttf');}
+        @font-face {font-family: Xenosphere; src: url('xenosphere.ttf');}
+    </style>
 </head>
-<body>
-    
+<body> 
+    <div class="gameModule"> 
+        <nav class="top-bar">
+            <h1 class="drifttype">Hillbillies</h1>
+            <h1> vs. </h1> 
+            <h1 class="xenosphere">Aliens!</h1>
+        </nav>
+        <div class="canvas-container">
+            <canvas class="canvas"></canvas>
+        </div>
+            <nav class="bottom-bar">
+                <button class="reset-btn">Reset Game!</button>
+                <h3>Made by Anderson, Inc.</h3>
+            </nav>
+   </div>
 </body>
+
 </html>

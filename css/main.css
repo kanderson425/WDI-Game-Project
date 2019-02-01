@@ -1,0 +1,48 @@
+body {
+    margin: 0;
+    background-color: #FFF4E0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.canvas {
+    border: 10px solid black;
+    margin: auto;
+    width: 1000px;
+    height: 700px;
+}
+
+.canvas-container {
+    text-align: center;
+    margin: auto;
+}
+
+nav {
+    margin: 0px;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0px;
+}
+
+.bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+}
+
+h1 {
+    font-size: 40px;
+    margin: 5px auto;
+}
+
+.drifttype {
+    font-family: DriftType;
+}
+
+.xenosphere {
+    font-family: Xenosphere;
+}
