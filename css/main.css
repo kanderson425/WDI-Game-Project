@@ -1,3 +1,8 @@
+* {
+    font-family: helvetica;
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     background-color: #FFF4E0;
@@ -36,7 +41,7 @@ nav {
 
 h1 {
     font-size: 40px;
-    margin: 5px auto;
+    margin: 5px 10px;
 }
 
 .drifttype {
@@ -45,4 +50,18 @@ h1 {
 
 .xenosphere {
     font-family: Xenosphere;
+}
+
+.reset-btn {
+    font-size: 20px;
+    border-radius: 5px;
+    margin-left: 30px;
+    color: black;
+    border: solid black 5px;
+    outline: none;
+}
+
+.reset-btn:hover {
+color: white;
+background-color: black;
 }
