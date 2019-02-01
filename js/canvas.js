@@ -6,11 +6,19 @@ canvas.height = window.innerHeight;
 
 let c = canvas.getContext('2d');
 
-var img = new Image();
-img.onload = function () {
-    c.drawImage(img, 0, 0, canvas.width, canvas.height);
+var bgImg = new Image();
+bgImg.onload = function () {
+    c.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
 }
-img.src = "Images/Background.png";
+
+bgImg.src = "Images/Background.png";
+
+var hbImg = new Image();
+hbImg.onload = function() {
+    c.drawImage(hbImg, 200, 200, 100, 100);
+}
+
+hbImg.src = "Images/Cartoon_hillbilly_with_rifle.jpg";
 
 
 /*----- app's state (variables) -----*/
