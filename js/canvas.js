@@ -6,6 +6,8 @@ canvas.height = window.innerHeight;
 
 let c = canvas.getContext('2d');
 
+
+//Background Image
 var bgImg = new Image();
 bgImg.onload = function () {
     c.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
@@ -13,12 +15,55 @@ bgImg.onload = function () {
 
 bgImg.src = "Images/Background.png";
 
-var hbImg = new Image();
-hbImg.onload = function() {
-    c.drawImage(hbImg, 200, 200, 100, 100);
+//Alien Spaceship Image
+
+var shipImg = new Image();
+shipImg.src ="Images/Single Ship Sprite.png";
+
+function Ship(x, y, dx, dy) {
+    this.x = x;
+    this.y = y;
+    this.dx = dx;
+    this.dy = dy;
+}
+    this.draw = function() {
+        shipImg.onload = function() {
+        c.drawImage(shipImg, 500, 100, 50, 50);
+        }  
+    }  
+ 
+var shipArray = [];
+
+funtion init() {
+    shipArray = [];
+    for (var i = 0; i < 10; i++) {
+        var x = Math.random();
+        var y = Math.random();
+        var dx = (Math.random() - 0.5) * 2;
+        var dy = (Math.random() - 0.5) * 2;
+        shipArray.push(new Ship(x, y, dx, dy));
+    }
 }
 
-hbImg.src = "Images/Cartoon_hillbilly_with_rifle.jpg";
+function animate () {
+    requestAnimationFrame(animate);
+    c.clearRect(0, 0, innerWidth, innerHeight);
+
+    for (var i = 0; i < shipArray.length; i++) {
+        shipArray[i].update();
+    };
+}
+
+init();
+animate();
+
+// /*Hillbilly Image with rifle
+// var hbImg = new Image();
+// hbImg.onload = function() {
+//     c.drawImage(hbImg, 200, 200, 100, 100);
+// }
+
+// hbImg.src = "Images/Cartoon_hillbilly_with_rifle.";
 
 
 /*----- app's state (variables) -----*/
@@ -31,53 +76,6 @@ hbImg.src = "Images/Cartoon_hillbilly_with_rifle.jpg";
 
 
 /*----- functions -----*/
-
-
-// c.fillStyle = "rgba(255, 0, 0, 0.5)";
-// c.fillRect(100, 100, 100, 100);
-// c.fillStyle = "rgba(0, 0, 255, 0.5)";
-// c.fillRect(400, 100, 100, 100);
-// c.fillStyle = "rgba(0, 255, 0, 0.5)";
-// c.fillRect(300, 300, 100, 100);
-
-// // Drawing a Line
-
-// c.beginPath();
-// c.moveTo(50, 300);
-// c.lineTo(300, 100);
-// c.lineTo(400, 300);
-// c.strokeStyle = "#fa34a3";
-// c.stroke();
-
-// // Drawing an arc/circle
-// c.beginPath();
-// c.arc(300, 300, 30, 0, Math.PI * 2, false);
-// c.strokeStyle = "blue";
-// c.stroke();
-
-// for (var i = 0; i < 2; i++) {
-//     var x = Math.random() * window.innerWidth;
-//     var y = Math.random() * window.innerHeight;
-//     c.beginPath();
-//     c.arc(x, y, 30, 0, Math.PI * 2, false);
-//     function getRandomColor() {
-//         var letters = "0123456789ABCDEF".split('');
-//         var color = '#';
-//         for (var i =0; i < 6; i++) {
-//             color += letters[Math.round(Math.random() * 15)];
-//         }
-//         return color;
-//     }
-//     c.strokeStyle = getRandomColor();
-//     c.stroke();
-// }
-// var x = Math.random() * window.innerWidth;
-// var y = Math.random() * window.innerHeight;
-// var dx = (Math.random() - 0.5) * 8;
-// var dy = (Math.random() - 0.5) * 8;
-// var radius = 30;
-
-
 
 // var mouse = {
 //     x: undefined,
