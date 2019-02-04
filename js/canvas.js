@@ -6,20 +6,6 @@ canvas.height = window.innerHeight;
 
 let c = canvas.getContext('2d');
 
-//Crosshair
-// var crosshairImg = new Image();
-// crosshairImg.onLoad = function() {
-//     c.drawImage(crosshairImg, 100, 100, 30, 30);
-// }  
-// crosshairImg.src = "Images/Crosshair3.jpg";
-
-//Background Image
-// var bgImg = new Image();
-// bgImg.onload = function () {
-//     c.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
-// }
-// bgImg.src = "Images/Background.png";
-
 //Alien Spaceship Image
 var shipImg = new Image();
 shipImg.src ="Images/Single Ship Sprite.png";
@@ -78,22 +64,9 @@ function Ship(x , y, dx, dy) {
             console.log("You hit a spaceship!")
         }
     }
-
-
 }
 
 var shipArray = [];
-
-//Can adjust the veloticy and # of ships here//
-for (var i = 0; i < 20; i++) {
-    shipArray.push(new Ship(x, y, dx, dy));
-    var x = Math.random() * (innerWidth - 58);
-    var y = Math.floor(Math.random() * 401);
-    var dx = (Math.random() - 0.5) * 3;
-    var dy = (Math.random() - 0.5) * 3;
-}
-
-
 
 function animate() {
     requestAnimationFrame(animate);
@@ -107,59 +80,21 @@ function animate() {
 
 animate();
 
-
-
-
-    
-//   this.update = function() {
-//       if(this.x > innerWidth || this.x - this.radius < 0) {
-//           this.dx = -this.dx;
-//       }
-
-//       if(this.y > innerHeight || this.y < 0) {
-//           this.dy = -this.dy;
-//       }
-//       this.x += this.dx;
-//       this.y += this.dy;
-
-//       this.draw();
-//   }  
-// }
-
 // var shipArray = [];
 
-// function init() {
-//     shipArray = [];
-//     for (var i = 0; i < 10; i++) {
-//         var x = Math.random();
-//         var y = Math.random();
-//         var dx = (Math.random() - 0.5) * 2;
-//         var dy = (Math.random() - 0.5) * 2;
-//         shipArray.push(new Ship(x, y, dx, dy));
-//     }
-// }
+//Can adjust the veloticy and # of ships here//
+function init() {
+    shipArray = [];
+    for (var i = 0; i < 10; i++) {
+        var x = Math.random() * (innerWidth - 58);
+        var y = Math.floor(Math.random() * 401);
+        var dx = (Math.random() - 0.5) * 3;
+        var dy = (Math.random() - 0.5) * 3;
+        shipArray.push(new Ship(x, y, dx, dy));
+    }
+}
 
-// function animate () {
-//     requestAnimationFrame(animate);
-//     c.clearRect(0, 0, innerWidth, innerHeight);
-
-//     for (var i = 0; i < shipArray.length; i++) {
-//         shipArray[i].update();
-//     };
-// }
-
-// init();
-// animate();
-
-// /*Hillbilly Image with rifle
-// var hbImg = new Image();
-// hbImg.onload = function() {
-//     c.drawImage(hbImg, 200, 200, 100, 100);
-// }
-
-// hbImg.src = "Images/Cartoon_hillbilly_with_rifle.";
-
-
+init();
 /*----- app's state (variables) -----*/
 
 
@@ -176,8 +111,5 @@ window.addEventListener('click',
 })
 
 //Reset Button
-
-document.querySelector('.reset-btn').addEventListener("click", function() {
-    alert("this is a test");
-});
+document.querySelector('.reset-btn').addEventListener("click", init);
 /*----- functions -----*/
