@@ -33,12 +33,20 @@ var shipSpeed = {
 // var x = Math.random() * innerWidth;
 // var y = Math.floor(Math.random() * 401);
 // var dx = (Math.random() -0.5) * 8;
-// var dy = (Math.random() - 0.5) * 8;
+// var dy = (Math.random() - 0.5) * 8
 
-var mouse = {
-    x: undefined,
-    y: undefined
-} 
+let mouse = {
+    x: null,
+    y: null
+}
+
+canvas.addEventListener('click', function(e) {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    this.getBoun
+    console.log(mouse);
+  });
+
 function Ship(x , y, dx, dy) {
     this.x = x;
     this.y = y;
@@ -55,13 +63,11 @@ function Ship(x , y, dx, dy) {
     this.update = function() {
         if (this.x >= innerWidth - 58 || this.x < 0) {
             this.dx = -this.dx;
-            
         }
     
         if (this.y >= 400 || this.y < 0) {
             this.dy = -this.dy;
         }
-    
     
         this.x += this.dx;
         this.y += this.dy;
@@ -70,13 +76,23 @@ function Ship(x , y, dx, dy) {
 
         //Interactivity
         // if(mouse.x - this.x < 50 && mouse.x - this.x > -50
-        //     && mouse.y - this.y < 100 && mouse.y - this.y > -100) {
-        //     this.x += 20;
+        //     && mouse.y - this.y < 50 && mouse.y - this.y > -50) {
+        //     // this.dx + 20; THIS IS WHERE WE WILL INTRODUCING THE SHOOTING
+        //     this.fadeOut();
         // }
-
-        this.draw();
     }
+    
+    this.collision = function() {
+        if(( -20 < mouse.x - this.x && mouse.x - this.x < 20) && 
+            (-20 < mouse.y - this.y && mouse.y - this.y < 20)) {
+                this.dx = 0;
+                this.dy = 0;
+                console.log("You have hit a ship");
+            }
+    }
+
 }
+  
 
 var shipArray = [];
 
@@ -86,27 +102,19 @@ var shipArray = [];
 /*----- cached element references -----*/
 
 
-
 /*----- event listeners -----*/
 
 //Shoot Functionality 
-
-function isIntersect(mouse, shipImg) {
-    return Math.sqrt((mouse.x - shipImg.x) ** 2 + (mouse.y - shipImg.y) ** 2);
-  }
+// var mouse = {
+//     x: undefined,
+//     y: undefined
+// }; 
   
-  canvas.addEventListener('click', function(e) {
-    const pos = {
-      x: e.clientX,
-      y: e.clientY
-    };
-    console.log(e.clientX, e.clientY);
-    shipArray.forEach(shipImg => {
-      if (isIntersect(mouse, shipImg)) {
-        console.log("a ship has been clicked");
-      }
-    });
-  });
+// canvas.addEventListener('click', function(e) {
+//     mouse.x = e.clientX;
+//     mouse.y = e.clientY;
+//     console.log(mouse.x, mouse.y);
+//   });
 
 // shipImg.isHitBy = function(x, y) {
 //     return (x >= this.x && x <= this.x + shipDimensions.x && Y >= this.y && Y <= this. Y + shipDimensions.y)
@@ -158,6 +166,7 @@ function animate() {
 
     for (var i = 0; i < shipArray.length; i++) {
         shipArray[i].update();
+        shipArray[i].collision();
     }
 }
 
