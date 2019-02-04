@@ -13,19 +13,18 @@ body {
 
 .canvas {
     border: 10px solid black;
-    margin: auto;
-    width: 1000px;
-    height: 700px;
+    margin: 0px;
     background-size: cover;
-    cursor: crosshair;
-}
-
-
+    cursor: url(file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Images/Crosshair.png), crosshair;
+    background-image: url('../Images/Background.png');
+    background-size: 100% 100%;
+    width: 1000px;
+    height: 700px
+}   
 
 .canvas-container {
     text-align: center;
     margin: auto;
-    background-image: url("../Images/Background.png");
 }
 
 nav {

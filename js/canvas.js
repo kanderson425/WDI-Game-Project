@@ -6,6 +6,12 @@ canvas.height = window.innerHeight;
 
 let c = canvas.getContext('2d');
 
+//Crosshair
+// var crosshairImg = new Image();
+// crosshairImg.onLoad = function() {
+//     c.drawImage(crosshairImg, 100, 100, 30, 30);
+// }  
+// crosshairImg.src = "Images/Crosshair3.jpg";
 
 //Background Image
 // var bgImg = new Image();
@@ -34,12 +40,17 @@ shipImg.src ="Images/Single Ship Sprite.png";
 // var dx = (Math.random() -0.5) * 8;
 // var dy = (Math.random() - 0.5) * 8;
 
+var mouse = {
+    x: undefined,
+    y: undefined
+}
+
 window.addEventListener('click', 
     function(event) {
         mouse.x = event.x;
-
+        mouse.y = event.y;
 })
-
+ 
 function Ship(x , y, dx, dy) {
     this.x = x;
     this.y = y;
@@ -50,12 +61,12 @@ function Ship(x , y, dx, dy) {
     this.draw = function() {
         var shipImg = new Image();
         shipImg.src ="Images/Single Ship Sprite.png"; 
-        c.drawImage(shipImg, this.x, this.y, 60, 60);
+        c.drawImage(shipImg, this.x, this.y, 60, 50);
        
     }
 
     this.update = function() {
-        if (this.x >= innerWidth - 50 || this.x < 0) {
+        if (this.x >= innerWidth - 58 || this.x < 0) {
             this.dx = -this.dx;
         }
     
@@ -68,6 +79,12 @@ function Ship(x , y, dx, dy) {
         this.y += this.dy;
 
         this.draw();
+
+        //Interactivity
+        if(mouse.x - this.x < 100 && mouse.x - this.x > -100
+            && mouse.y - this.y < 100 && mouse.y - this.y > -100) {
+            console.log("You hit a spaceship!")
+        }
     }
 
 
@@ -76,12 +93,12 @@ function Ship(x , y, dx, dy) {
 var shipArray = [];
 
 //Can adjust the veloticy and # of ships here//
-for (var i = 0; i < 5; i++) {
+for (var i = 0; i < 20; i++) {
     shipArray.push(new Ship(x, y, dx, dy));
-    var x = Math.random() * (innerWidth - 50);
+    var x = Math.random() * (innerWidth - 58);
     var y = Math.floor(Math.random() * 401);
-    var dx = (Math.random() - 0.5) * 10;
-    var dy = (Math.random() - 0.5) * 10;
+    var dx = (Math.random() - 0.5) * 3;
+    var dy = (Math.random() - 0.5) * 3;
 }
 
 
