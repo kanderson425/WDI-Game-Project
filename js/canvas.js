@@ -34,7 +34,6 @@ shipImg.src ="Images/Single Ship Sprite.png";
 // } 
 
 //Random moving spaceships
-
 // var x = Math.random() * innerWidth;
 // var y = Math.floor(Math.random() * 401);
 // var dx = (Math.random() -0.5) * 8;
@@ -43,14 +42,7 @@ shipImg.src ="Images/Single Ship Sprite.png";
 var mouse = {
     x: undefined,
     y: undefined
-}
-
-window.addEventListener('click', 
-    function(event) {
-        mouse.x = event.x;
-        mouse.y = event.y;
-})
- 
+} 
 function Ship(x , y, dx, dy) {
     this.x = x;
     this.y = y;
@@ -176,5 +168,16 @@ animate();
 
 /*----- event listeners -----*/
 
+//Shoot Functionality 
+window.addEventListener('click', 
+    function(event) {
+        mouse.x = event.x;
+        mouse.y = event.y;
+})
 
+//Reset Button
+
+document.querySelector('.reset-btn').addEventListener("click", function() {
+    alert("this is a test");
+});
 /*----- functions -----*/
