@@ -16,11 +16,16 @@ body {
     margin: auto;
     width: 1000px;
     height: 700px;
+    background-size: cover;
+    cursor: crosshair;
 }
+
+
 
 .canvas-container {
     text-align: center;
     margin: auto;
+    background-image: url("../Images/Background.png");
 }
 
 nav {
@@ -45,11 +50,11 @@ h1 {
 }
 
 .drifttype {
-    font-family: DriftType;
+    font-family: DriftType Regular;
 }
 
 .xenosphere {
-    font-family: Xenosphere;
+    font-family: xenosphere Regular;
 }
 
 .reset-btn {
