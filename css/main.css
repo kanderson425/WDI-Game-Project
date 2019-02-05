@@ -7,8 +7,9 @@ body {
     margin: 0;
     background-color: #FFF4E0;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     
 }
 
@@ -23,11 +24,11 @@ body {
 
 .canvas-container {
     text-align: center;
-    margin: auto;
+    margin: auto 500px;
 }
 
 nav {
-    margin: 0px;
+    margin: 0px 20px;
 }
 
 .top-bar {
@@ -37,9 +38,11 @@ nav {
 }
 
 .bottom-bar {
-    display: flex;
-    justify-content: space-between;
+    /* display: flex;
+    flex-direction: row;
+    justify-content: space-between; */
     font-size: 10px;
+    margin: 0px 20px; 
 }
 
 h1 {
@@ -61,10 +64,17 @@ h1 {
     margin-left: 30px;
     color: black;
     border: solid black 5px;
+    padding: 5px;
     outline: none;
+    margin: 0px 50px;
 }
 
 .reset-btn:hover {
 color: white;
 background-color: black;
+}
+
+h3 {
+    margin: 20px 50px;
+    text-align: center;
 }

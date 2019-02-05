@@ -168,7 +168,7 @@ function Ship(x , y, dx, dy) {
                 // console.log(mouse.x, this.x,this.x + 0.08 * canvas.width);
                 console.log(mouse.y, this.y, this.y + shipDimensions.height);
                 // if (mouse.x >= this.x && mouse.x < (this.x + shipDimensions.width)) {
-                if (mouse.y >= this.y && mouse.y < (this.y + shipDimensions.height)) {
+                if (mouse.y >= (this.y + 70) && mouse.y < (this.y + shipDimensions.height) + 50) {
                 // if (mouse.y >= (this.y + 80) && (mouse.y < (this.y + shipDimensions.height + 80))
                 //     && mouse.x >= (this.x + (shipDimensions.width/2)) && mouse.x < (this.x)) {
                     console.log('Landed a hit!');
