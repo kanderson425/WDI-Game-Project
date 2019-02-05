@@ -3,30 +3,36 @@ var canvas = document.querySelector('canvas');
 canvasLeft = canvas.offsetLeft;
 canvasTop = canvas.offsetTop;
 canvasProperties = [];
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
 let c = canvas.getContext('2d');
+
+var setCanvasSize = function() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+ setCanvasSize();
 
 //Alien Spaceship Image
 var shipImg = new Image();
-shipImg.src ="Images/Single Ship Sprite.png";
+shipImg.src ="Images/Single Ship Sprite.png"
 
 var shipDimensions = {
-    width: 60,
-    height: 50
+    width: .10 * canvas.width,
+    height: .10 * canvas.height
 };
 
 var shipLocation = {
-    x: null,
-    y: null
+    x: Math.random() * (innerWidth - 58),
+    y: Math.floor(Math.random() * 401)
 };
 
 var shipSpeed = {
     dx: 0,
     dy: 0
 }
+
+let shipArray = [];
+let survivingShips = [];
+let shipsOnScreen = [];
 
 //Random Spaceships Generator 
 // shipImg.onload = function() {
@@ -43,6 +49,57 @@ var shipSpeed = {
 // var dx = (Math.random() -0.5) * 8;
 // var dy = (Math.random() - 0.5) * 8
 
+let mouse = {
+    x: null,
+    y: null
+}  
+
+// class Ship {
+//     constructor(x, y, dx, dy, width, height) {
+//         this.x = x;
+//         this.y = y;
+//         this.dx = dx;
+//         this.dy = dy;
+//         this.width = .08 * canvas.width;
+//         this.height = .08 * canvas.height;
+//     }
+
+//     draw() {
+//         var shipImg = new Image();
+//         shipImg.src ="Images/Single Ship Sprite.png"; 
+//         c.drawImage(shipImg, this.x, this.y, this.width, this.height);
+
+//     }
+
+//     update() {
+//         if (this.x >= innerWidth - 58 || this.x < 0) {
+//             this.dx = -this.dx;
+//         }
+    
+//         if (this.y >= 400 || this.y < 0) {
+//             this.dy = -this.dy;
+//         }
+//         this.draw();
+//     }
+
+//     shoot() {
+//         canvas.addEventListener('click', function(e) { 
+//             mouse.x = e.clientX;
+//             mouse.y = e.clientY;
+//             console.log(mouse.x, this.x, this.x + 0.08 * canvas.width);
+//             if (mouse.x >= this.x && mouse.x < (this.x + (0.08 * canvas.width))) {
+//                 console.log("This is a hit!");
+//             } else {
+//                 console.log("This is not a hit");
+//             }            
+//         });
+//     }       
+//     die() {
+
+
+//     }
+// }
+
 function Ship(x , y, dx, dy) {
     this.x = x;
     this.y = y;
@@ -52,7 +109,7 @@ function Ship(x , y, dx, dy) {
     this.draw = function() {
         var shipImg = new Image();
         shipImg.src ="Images/Single Ship Sprite.png"; 
-        c.drawImage(shipImg, this.x, this.y, shipDimensions.width, shipDimensions.height);
+        c.drawImage(shipImg, this.x, this.y, .08 * canvas.width, .08 * canvas.height);
        
     }
 
@@ -65,8 +122,8 @@ function Ship(x , y, dx, dy) {
             this.dy = -this.dy;
         }
     
-        this.x += this.dx;
-        this.y += this.dy;
+        let newLocX = this.x += this.dx;
+        let newLocY = this.y += this.dy;
 
         this.draw();
     }
@@ -80,29 +137,52 @@ function Ship(x , y, dx, dy) {
     //         }
     // }
 
-    canvas.addEventListener('click', function(e) {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-        let xOffset = e.clientX - canvasLeft;
-        let yOffset = e.clientY - canvasTop;
-        this.x = x;
-        this.y = y;
-    
-        console.log("Mouse clicked on:" + mouse.x, mouse.y);
-        console.log("The ship coordinates are: " + this.x, this.y);
-    
-             if((mouse.x < this.x - 10 + shipDimensions.width) && (this.x - 15 < mouse.x) && 
-                (mouse.y > this.y + 20 + shipDimensions.height) && 
-                (mouse.y < this.y + 70 + shipDimensions.height)) {        
-                    console.log("Hit a ship!");
-        } else {
-            console.log("Did not hit");
-        }
-    });
+        this.shoot = function () {
+            canvas.addEventListener('click', function(e) {
 
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+                // let ship = shipArray[i];
+                let xOffset = this.x - canvasLeft;
+                let yOffset = this.y - canvasTop;
+                this.x = x;
+                this.y = y;
+                let survivingShips = [];
+                let hitShips = [];
+                // console.log("Mouse clicked on:" + mouse.x, mouse.y);
+                // console.log("The ship coordinates are: " + this.x, this.y);
+                // for (var i = 0; i < shipArray.length; i++) {
+                //     // if((mouse.x < xOffset + shipDimensions.width - 48) && (xOffset - 60 < mouse.x) { 
+                //         if((mouse.y > yOffset + 30) && 
+                //         (mouse.y < yOffset + 30 + shipDimensions.height)) {
+                //             console.log("Hit a ship!");
+                //             hitShips.push(ship);
+                //             console.log(hitShips);
+                //     }
+                //      else {
+                //     console.log("Did not hit.");
+                //     survivingShips.push(ship);
+                // }
+                // console.log(this.x, this.y)
+                // console.log(, mouse.y)
+                // console.log(mouse.x, this.x,this.x + 0.08 * canvas.width);
+                console.log(mouse.y, this.y, this.y + shipDimensions.height);
+                // if (mouse.x >= this.x && mouse.x < (this.x + shipDimensions.width)) {
+                if (mouse.y >= this.y && mouse.y < (this.y + shipDimensions.height)) {
+                // if (mouse.y >= (this.y + 80) && (mouse.y < (this.y + shipDimensions.height + 80))
+                //     && mouse.x >= (this.x + (shipDimensions.width/2)) && mouse.x < (this.x)) {
+                    console.log('Landed a hit!');
+                } else {
+                    console.log("Miss");
+                }
+                    shipsOnScreen = survivingShips;
+                // }   
+            });
+        }
+        this.shoot();
 }
 
-var shipArray = [];
+
 
 /*----- app's state (variables) -----*/
 
@@ -113,11 +193,9 @@ var shipArray = [];
 /*----- event listeners -----*/
 
 //Shoot Functionality 
-let mouse = {
-    x: null,
-    y: null
-}
-
+// let mouse = {
+//     x: null,
+//     y: null
 
 // shipImg.isHitBy = function(x, y) {
 //     return (x >= this.x && x <= this.x + shipDimensions.x && Y >= this.y && Y <= this. Y + shipDimensions.y)
@@ -158,25 +236,24 @@ let mouse = {
 // })
 
 //Reset Button
-document.querySelector('.reset-btn').addEventListener("click", init);
+// document.querySelector('.reset-btn').addEventListener("click", init);
 
 
 /*----- functions -----*/
 function animate() {
     requestAnimationFrame(animate);
     c.clearRect(0, 0, innerWidth, innerHeight);
-
-
     for (var i = 0; i < shipArray.length; i++) {
+        shipArray[i].draw();
         shipArray[i].update();
-        // shipArray[i].collision();
+        // shipArray[i].shoot();
     }
 }
+
 
 animate();
 
 //Ships Getting shot
-
 function die() {
 
 }
@@ -184,7 +261,7 @@ function die() {
 //Can adjust the velocity and # of ships here//
 function init() {
     shipArray = [];
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < 1; i++) {
         var x = Math.random() * (innerWidth - 58);
         var y = Math.floor(Math.random() * 401);
         var dx = (Math.random() - 0.5) * shipSpeed.dx;

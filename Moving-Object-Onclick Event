@@ -1,0 +1,96 @@
+
+
+//width and height of canvas...
+var rW = 400;
+var rH = 500;
+
+var coinImage = getCoinImage();
+var coinsOnScreen = [];
+var risingSpeed = 100; //pixels per second...
+var coinSize = 75;
+
+var lastAnimationTime = 0;
+var howLongUntilNextCoin = 1000;
+var nextCoinOnScreen = 0;
+
+function doDraw() {
+  var can = document.getElementById("myCanvas");
+  can.width = rW;
+  can.height = rH;
+  var context = can.getContext("2d");
+
+  //Erase the canvas
+  context.fillStyle = "#FFFFFF";
+  context.fillRect(0, 0, rW, rH);
+
+  if (new Date().getTime() - nextCoinOnScreen > 0) {
+
+    var newX = Math.floor(Math.random() * rW) + 1;
+    var newY = rH + 50;
+
+    var newCoin = {
+      x: newX,
+      y: newY
+    };
+    coinsOnScreen.push(newCoin);
+    nextCoinOnScreen = new Date().getTime() + howLongUntilNextCoin;
+  }
+
+  //Now draw the coins
+  if (lastAnimationTime != 0) {
+
+    var deltaTime = new Date().getTime() - lastAnimationTime;
+    var coinRisePixels = Math.floor((deltaTime * risingSpeed) / 1000);
+
+    var survivingCoins = [];
+    for (var i = 0; i < coinsOnScreen.length; i++) {
+      var coin = coinsOnScreen[i];
+      coin.y = coin.y - coinRisePixels;
+      //the stl variable controlls the alpha of the image            
+      if (coin.y + 50 > 0) {
+        context.drawImage(coinImage, coin.x, coin.y);
+        //this coin is still on the screen, so promote it to the new array...
+        survivingCoins.push(coin);
+      }
+    }
+    coinsOnScreen = survivingCoins;
+  }
+  lastAnimationTime = new Date().getTime();
+  //Wait, and then call this function again to animate:
+  setTimeout(function() {
+    doDraw();
+  }, 30);
+}
+
+function setupClickHandler() {
+  var can = document.getElementById("myCanvas");
+  //Here is the onclick handler
+  can.onclick = function(e) {
+    var x = e.clientX;
+    var y = e.clientY;
+    var survivingCoins = [];
+    for (var i = 0; i < coinsOnScreen.length; i++) {
+      var coin = coinsOnScreen[i];
+      //check to see if this coin has been clicked...
+      if (x > coin.x && x < coin.x + coinSize && y > coin.y && y < coin.y + coinSize) {
+        //ths coin will disappear because it is not inserted into the new array...
+        console.log("Coin was clicked!! " + x + " " + y);
+      } else {
+        survivingCoins.push(coin);
+      }
+
+    }
+    coinsOnScreen = survivingCoins;
+  };
+
+}
+
+
+doDraw();
+setupClickHandler();
+
+function getCoinImage() {
+  var image = new Image(50, 50);
+  image.src = "data:image/png;base64,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";
+  return image;
+}
