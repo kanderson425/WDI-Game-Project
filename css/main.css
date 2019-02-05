@@ -16,7 +16,7 @@ body {
     border: 10px solid black;
     margin: 0px;
     background-size: cover;
-    cursor: url(file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Images/Crosshair.png), crosshair;
+    cursor: url(file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Images/Crosshair.png) 30 30, crosshair;
     background-image: url('../Images/Background.png');
     background-size: 100% 100%;
     width: 1000px;

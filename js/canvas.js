@@ -1,5 +1,8 @@
 /*----- constants -----*/
 var canvas = document.querySelector('canvas');
+canvasLeft = canvas.offsetLeft;
+canvasTop = canvas.offsetTop;
+canvasProperties = [];
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -11,13 +14,18 @@ var shipImg = new Image();
 shipImg.src ="Images/Single Ship Sprite.png";
 
 var shipDimensions = {
-    x: 60,
-    y: 50
+    width: 60,
+    height: 50
+};
+
+var shipLocation = {
+    x: null,
+    y: null
 };
 
 var shipSpeed = {
-    dx: 2,
-    dy: 2
+    dx: 0,
+    dy: 0
 }
 
 //Random Spaceships Generator 
@@ -35,18 +43,6 @@ var shipSpeed = {
 // var dx = (Math.random() -0.5) * 8;
 // var dy = (Math.random() - 0.5) * 8
 
-let mouse = {
-    x: null,
-    y: null
-}
-
-canvas.addEventListener('click', function(e) {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-    this.getBoun
-    console.log(mouse);
-  });
-
 function Ship(x , y, dx, dy) {
     this.x = x;
     this.y = y;
@@ -56,7 +52,7 @@ function Ship(x , y, dx, dy) {
     this.draw = function() {
         var shipImg = new Image();
         shipImg.src ="Images/Single Ship Sprite.png"; 
-        c.drawImage(shipImg, this.x, this.y, shipDimensions.x, shipDimensions.y);
+        c.drawImage(shipImg, this.x, this.y, shipDimensions.width, shipDimensions.height);
        
     }
 
@@ -73,26 +69,38 @@ function Ship(x , y, dx, dy) {
         this.y += this.dy;
 
         this.draw();
-
-        //Interactivity
-        // if(mouse.x - this.x < 50 && mouse.x - this.x > -50
-        //     && mouse.y - this.y < 50 && mouse.y - this.y > -50) {
-        //     // this.dx + 20; THIS IS WHERE WE WILL INTRODUCING THE SHOOTING
-        //     this.fadeOut();
-        // }
     }
     
-    this.collision = function() {
-        if(( -20 < mouse.x - this.x && mouse.x - this.x < 20) && 
-            (-20 < mouse.y - this.y && mouse.y - this.y < 20)) {
-                this.dx = 0;
-                this.dy = 0;
-                console.log("You have hit a ship");
-            }
-    }
+    // this.collision = function() {
+    //     if( this.x + shipDimensions.width > mouse.x && this.x < mouse.x && 
+    //         this.y + shipDimensions.height > mouse.y && this.y - shipDimensions.height < mouse.y) {
+    //             this.dx = 0;
+    //             this.dy = 0;
+    //             console.log("You have hit a ship");
+    //         }
+    // }
+
+    canvas.addEventListener('click', function(e) {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+        let xOffset = e.clientX - canvasLeft;
+        let yOffset = e.clientY - canvasTop;
+        this.x = x;
+        this.y = y;
+    
+        console.log("Mouse clicked on:" + mouse.x, mouse.y);
+        console.log("The ship coordinates are: " + this.x, this.y);
+    
+             if((mouse.x < this.x - 10 + shipDimensions.width) && (this.x - 15 < mouse.x) && 
+                (mouse.y > this.y + 20 + shipDimensions.height) && 
+                (mouse.y < this.y + 70 + shipDimensions.height)) {        
+                    console.log("Hit a ship!");
+        } else {
+            console.log("Did not hit");
+        }
+    });
 
 }
-  
 
 var shipArray = [];
 
@@ -105,16 +113,11 @@ var shipArray = [];
 /*----- event listeners -----*/
 
 //Shoot Functionality 
-// var mouse = {
-//     x: undefined,
-//     y: undefined
-// }; 
-  
-// canvas.addEventListener('click', function(e) {
-//     mouse.x = e.clientX;
-//     mouse.y = e.clientY;
-//     console.log(mouse.x, mouse.y);
-//   });
+let mouse = {
+    x: null,
+    y: null
+}
+
 
 // shipImg.isHitBy = function(x, y) {
 //     return (x >= this.x && x <= this.x + shipDimensions.x && Y >= this.y && Y <= this. Y + shipDimensions.y)
@@ -166,18 +169,22 @@ function animate() {
 
     for (var i = 0; i < shipArray.length; i++) {
         shipArray[i].update();
-        shipArray[i].collision();
+        // shipArray[i].collision();
     }
 }
 
 animate();
 
-// var shipArray = [];
+//Ships Getting shot
+
+function die() {
+
+}
 
 //Can adjust the velocity and # of ships here//
 function init() {
     shipArray = [];
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 2; i++) {
         var x = Math.random() * (innerWidth - 58);
         var y = Math.floor(Math.random() * 401);
         var dx = (Math.random() - 0.5) * shipSpeed.dx;
