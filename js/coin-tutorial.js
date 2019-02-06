@@ -1,12 +1,22 @@
 //width and height of canvas...
-var rW = window.innerWidth;
-var rH = window.innerHeight;
+var canvasWidth = window.innerWidth;
+var canvasHeight = window.innerHeight;
 
 var bgImage = getBgImage();
 var shipImage = getShipImage();
 var shipsOnScreen = [];
-var risingSpeed = 50; //pixels per second...
-var shipSize = 75;
+var risingSpeed = 0; //pixels per second...
+var shipSpeed = {
+    dx: 0,
+    dy: 0
+}
+
+// var shipSize = 200;
+
+var shipDimensions = {
+    width: .10 * canvasWidth,
+    height: .10 * canvasHeight
+};
 
 var lastAnimationTime = 0;
 var howLongUntilNextShip = 1000;
@@ -18,19 +28,16 @@ function doDraw() {
   can.height = window.innerHeight;
   var context = can.getContext("2d");
 
-  //Erase the canvas
-//   context.fillStyle = "#ffffff";
-//   context.fillRect(0, 0, window.innerWidth, window.innerHeight);
-
   if (new Date().getTime() - nextShipOnScreen > 0) {
 
-    var newX = Math.floor(Math.random() * rW) + 1;
-    var newY = rH + 50;
+    var newX = Math.floor(Math.random() * canvasWidth) + 1;
+    var newY = Math.floor(Math.random() * (.7 * canvasHeight));
 
     var newShip = {
       x: newX,
       y: newY
     };
+
     shipsOnScreen.push(newShip);
     nextShipOnScreen = new Date().getTime() + howLongUntilNextShip;
   }
@@ -71,9 +78,9 @@ function setupClickHandler() {
     for (var i = 0; i < shipsOnScreen.length; i++) {
       var ship = shipsOnScreen[i];
       //check to see if this coin has been clicked...
-      if (x > ship.x && x < ship.x + shipSize && y > ship.y && y < ship.y + shipSize) {
+      if (x > ship.x && x < ship.x + shipDimensions.width && y > (ship.y + 60) && y < ship.y + (shipDimensions.height + 33)) {
         //ths ship will disappear because it is not inserted into the new array...
-        console.log("Ship was clicked!! " + x + " " + y);
+        console.log("Mouse coordinates " + x + " " + y + " Ship coordinates " + x + " " + y);
       } else {
         survivingShips.push(ship);
       }
