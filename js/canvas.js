@@ -105,8 +105,10 @@ function Ship(x , y, dx, dy) {
     this.y = y;
     this.dx = dx;
     this.dy = dy;
-    
+    var continueAnimating = true;
+
     this.draw = function() {
+        if(!continueAnimating) {return;}
         var shipImg = new Image();
         shipImg.src ="Images/Single Ship Sprite.png"; 
         c.drawImage(shipImg, this.x, this.y, .08 * canvas.width, .08 * canvas.height);
@@ -139,7 +141,6 @@ function Ship(x , y, dx, dy) {
 
         this.shoot = function () {
             canvas.addEventListener('click', function(e) {
-
                 mouse.x = e.clientX;
                 mouse.y = e.clientY;
                 // let ship = shipArray[i];
@@ -151,7 +152,7 @@ function Ship(x , y, dx, dy) {
                 let hitShips = [];
                 // console.log("Mouse clicked on:" + mouse.x, mouse.y);
                 // console.log("The ship coordinates are: " + this.x, this.y);
-                // for (var i = 0; i < shipArray.length; i++) {
+                for (var i = 0; i < shipArray.length; i++) {
                 //     // if((mouse.x < xOffset + shipDimensions.width - 48) && (xOffset - 60 < mouse.x) { 
                 //         if((mouse.y > yOffset + 30) && 
                 //         (mouse.y < yOffset + 30 + shipDimensions.height)) {
@@ -167,16 +168,21 @@ function Ship(x , y, dx, dy) {
                 // console.log(, mouse.y)
                 // console.log(mouse.x, this.x,this.x + 0.08 * canvas.width);
                 console.log(mouse.x, this.x, this.x + shipDimensions.width);
+                var ship = shipArray[i];
                 if (mouse.x >= this.x && mouse.x < (this.x + shipDimensions.width - 20) 
                     && (mouse.y >= (this.y + 70) && mouse.y < (this.y + shipDimensions.height) + 50)) {
                 // if (mouse.y >= (this.y + 80) && (mouse.y < (this.y + shipDimensions.height + 80))
                 //     && mouse.x >= (this.x + (shipDimensions.width/2)) && mouse.x < (this.x)) {
                     console.log('Landed a hit!');
+                    hitShips.push(ship);
+                    continueAnimating = false;
+                    
                 } else {
                     console.log("Miss");
+                    survivingShips.push(ship);
                 }
                     shipsOnScreen = survivingShips;
-                // }   
+                }   
             });
         }
         this.shoot();
@@ -236,7 +242,7 @@ function Ship(x , y, dx, dy) {
 // })
 
 //Reset Button
-// document.querySelector('.reset-btn').addEventListener("click", init);
+document.querySelector('.reset-btn').addEventListener("click", init);
 
 
 /*----- functions -----*/
@@ -246,11 +252,9 @@ function animate() {
     for (var i = 0; i < shipArray.length; i++) {
         shipArray[i].draw();
         shipArray[i].update();
-        // shipArray[i].shoot();
+        shipArray[i].shoot();
     }
 }
-
-
 animate();
 
 //Ships Getting shot
@@ -258,10 +262,13 @@ function die() {
 
 }
 
+function changeImg() {
+
+}
 //Can adjust the velocity and # of ships here//
 function init() {
     shipArray = [];
-    for (var i = 0; i < 1; i++) {
+    for (var i = 0; i < 2; i++) {
         var x = Math.random() * (innerWidth - 58);
         var y = Math.floor(Math.random() * 401);
         var dx = (Math.random() - 0.5) * shipSpeed.dx;
