@@ -7,11 +7,6 @@ const sounds = {
 }
 
 /*----- app's state (variables) -----*/
-var shipSpeed = {
-    dx: (Math.random() - .5) * 5,
-    dy: (Math.random() - .5) * 5
-}
-
 var shipDimensions = {
     width: .10 * canvasWidth,
     height: .10 * canvasHeight
@@ -52,10 +47,17 @@ var shipDimensions = {
 
 var ship = {
     x: Math.floor(Math.random() * (canvasWidth)),
-    y: Math.floor(Math.random() * (.7 * canvasHeight)),
-    dx: (Math.random()) * 5,
-    dy: (Math.random()) * 5,
+    y: Math.floor(Math.random() * (.55 * canvasHeight)),
+    dx: (Math.random() - 1) * 3,
+    dy: (Math.random() - 1) * 3
 }
+
+var newShip = {
+    x: Math.floor(Math.random() * (canvasWidth)),
+    y: Math.floor(Math.random() * (.55 * canvasHeight)),
+    dx: (Math.random() - 1) * 3,
+    dy: (Math.random() - 1) * 3
+  };
 
 function doDraw() {
   var can = document.querySelector('canvas');;
@@ -64,17 +66,11 @@ function doDraw() {
   var context = can.getContext("2d");
 
   if (new Date().getTime() - nextShipOnScreen > 0) {
-
-    var newX = Math.floor(Math.random() * (canvasWidth * .8));
-    var newY = Math.floor(Math.random() * (.55 * canvasHeight));
-    var newDx = (Math.random()) * 5;
-    var newDy = (Math.random()) * 5;
-
     var newShip = {
-      x: newX,
-      y: newY,
-      dx: newDx,
-      dy: newDy
+      x: Math.floor(Math.random() * (canvasWidth)),
+      y: Math.floor(Math.random() * (.55 * canvasHeight)),
+      dx: (Math.random() - 1) * 3,
+      dy: (Math.random() - 1) * 3
     };
 
     shipsOnScreen.push(newShip);
@@ -83,43 +79,25 @@ function doDraw() {
 
   //Now draw the ships
   if (lastAnimationTime != 0) {
-    // var deltaTime = new Date().getTime() - lastAnimationTime;
-    // var shipVerticalPixels = Math.floor((deltaTime * shipSpeed.dx)/500);
-    // var shipHorizontalPixels = Math.floor((deltaTime * shipSpeed.dx) /500);
+ 
     var survivingShips = [];
     for (var i = 0; i < shipsOnScreen.length; i++) {
         var ship = shipsOnScreen[i];
 
-        var newShip = {
-            x: newX,
-            y: newY
-          };
-
-        var newShipSpeed = {
-            dx: (Math.random() - 0.5) * 2,
-            dy: (Math.random() - 0.5) * 2,
-        }    
-
-        var newX = Math.floor(Math.random() * (canvasWidth * .6));
-        var newY = Math.floor(Math.random() * (.6 * canvasHeight));
-
           function update() {
             if (ship.x + shipDimensions.width - 30  > canvasWidth || ship.x < 0) {
-                shipSpeed.dx = -shipSpeed.dx
+                ship.dx = -ship.dx
             }
             if (ship.y > (canvasHeight * .60) || ship.y < 0) {
-                shipSpeed.dy = -shipSpeed.dy;
+                ship.dy = -ship.dy;
             }
-            ship.x += shipSpeed.dx;
-            ship.y += shipSpeed.dy;
+            ship.x += ship.dx;
+            ship.y += ship.dy;
             }
     
         context.drawImage(shipImage, ship.x, ship.y);
-
-        function drawScore() {
-            context.font = "20px Arial white";
-            context.fillText("Score: " + score, 15, 30);
-        }
+        
+        console.log(ship.x, ship.y);
 
         //this ship is still on the screen, so promote it to the new array...
         survivingShips.push(ship);
@@ -188,7 +166,7 @@ function drawScore() {
 }
 
 function drawTimer() {
-    var timeLeft = 30;
+    var timeLeft = 60;
     var downloadTimer = setInterval(function() {
         document.getElementById("timer").innerHTML = timeLeft + " seconds remaining!";
         timeLeft -= 1;
@@ -243,7 +221,6 @@ function init() {
     can.height = window.innerHeight;
     var context = can.getContext("2d");
 }
-
 
 // hillbillyYeehaw();
 // alienSound();
