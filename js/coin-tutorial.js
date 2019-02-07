@@ -8,9 +8,10 @@ const sounds = {
 
 /*----- app's state (variables) -----*/
 var shipSpeed = {
-    dx: (Math.random()) * 4,
-    dy: (Math.random()) * 4
+    dx: (Math.random() - .5) * 0,
+    dy: (Math.random() - .5) * 0
 }
+
 var shipDimensions = {
     width: .10 * canvasWidth,
     height: .10 * canvasHeight
@@ -31,7 +32,7 @@ function playSound(name) {
     player.play();
 }
 
-var canvasWidth =  0.5 * window.innerWidth;
+var canvasWidth =  window.innerWidth;
 var canvasHeight = window.innerHeight;
 var can = document.querySelector('canvas');;
 var context = can.getContext("2d");
@@ -40,7 +41,7 @@ var context = can.getContext("2d");
 var shipImage = getShipImage();
 var shipsOnScreen = [];
 var lastAnimationTime = 0;
-var howLongUntilNextShip = 3000;
+var howLongUntilNextShip = 1000;
 var nextShipOnScreen = 0;
 var hillbillyImage = getHillbillyImage();
 
@@ -52,8 +53,16 @@ var shipDimensions = {
 var ship = {
     x: Math.floor(Math.random() * (canvasWidth)),
     y: Math.floor(Math.random() * (.7 * canvasHeight)),
+    dx: (Math.random()) * 0,
+    dy: (Math.random()) * 0,
 }
 
+var newShip = {
+    x: Math.floor(Math.random() * (canvasWidth * .8)),
+    y: Math.floor(Math.random() * (.55 * canvasHeight)),
+    dx: (Math.random()) * 0,
+    dy: (Math.random()) * 0
+  };
 
 function doDraw() {
   var can = document.querySelector('canvas');;
@@ -63,37 +72,21 @@ function doDraw() {
 
   if (new Date().getTime() - nextShipOnScreen > 0) {
 
-    var newX = Math.floor(Math.random() * (canvasWidth * .8));
-    var newY = Math.floor(Math.random() * (.55 * canvasHeight));
-
-    var newShip = {
-      x: newX,
-      y: newY
-    };
-
     shipsOnScreen.push(newShip);
     nextShipOnScreen = new Date().getTime() + howLongUntilNextShip;
   }
 
   //Now draw the ships
   if (lastAnimationTime != 0) {
-    // var deltaTime = new Date().getTime() - lastAnimationTime;
-    // var shipVerticalPixels = Math.floor((deltaTime * shipSpeed.dx)/500);
-    // var shipHorizontalPixels = Math.floor((deltaTime * shipSpeed.dx) /500);
     var survivingShips = [];
     for (var i = 0; i < shipsOnScreen.length; i++) {
-        var ship = shipsOnScreen[i];
+        var newShip = shipsOnScreen[i];
         var newShip = {
-            x: newX,
-            y: newY
+            x: Math.floor(Math.random() * (canvasWidth * .8)),
+            y: Math.floor(Math.random() * (.55 * canvasHeight)),
+            dx: (Math.random()) * 0,
+            dy: (Math.random()) * 0
           };
-        var newShipSpeed = {
-            dx: (Math.random() - 0.5) * 7,
-            dy: (Math.random() - 0.5) * 7,
-        }    
-
-        var newX = Math.floor(Math.random() * (canvasWidth * .6));
-        var newY = Math.floor(Math.random() * (.6 * canvasHeight));
 
           function update() {
             if (ship.x + shipDimensions.width - 30  > canvasWidth || ship.x < 0) {
@@ -102,24 +95,21 @@ function doDraw() {
             if (ship.y > (canvasHeight * .60) || ship.y < 0) {
                 shipSpeed.dy = -shipSpeed.dy;
             }
-                ship.x = ship.x + shipSpeed.dx;
-                ship.y = ship.y + shipSpeed.dy;
-            }    
-      //the stl variable controlls the alpha of the image            
-    //   if ((ship.y + shipDimensions.height < (canvasHeight * .6) && ship.y > 0) && 
-    //         (ship.x + shipDimensions.width - 30 < canvasWidth && ship.x > 0)) {
+            newShip.x += newShip.dx;
+            newShip.y += newShip.dy;
+            }
     
-        context.drawImage(shipImage, ship.x, ship.y);
+        context.drawImage(shipImage, newShip.x, newShip.y);
+        update();
         function drawScore() {
             context.font = "20px Arial white";
             context.fillText("Score: " + score, 15, 30);
         }
 
         //this ship is still on the screen, so promote it to the new array...
-        survivingShips.push(ship);
-    //   }
-      update();
+        survivingShips.push(newShip);
     }
+
     shipsOnScreen = survivingShips;
   }
  
@@ -149,7 +139,7 @@ function setupClickHandler() {
         // console.log("Mouse coordinates " + x + " " + y + " Ship coordinates " + ship.x + " " + ship.y);
         //  return score +100;
       } else {
-        survivingShips.push(ship);
+        survivingShips.push(newShip);
       }
 
     }
@@ -195,10 +185,12 @@ function drawTimer() {
 }    
 
 function startGame() {
+    var titlePage = document.querySelector('title-page')
     var can = document.querySelector('canvas');;
     can.width  = window.innerWidth;
     can.height = window.innerHeight;
     var context = can.getContext("2d");
+    // titlePage.style.display = "none";
     context.drawImage(hillbillyImage, canvasWidth * .2, canvasHeight * .8);
 }
 
