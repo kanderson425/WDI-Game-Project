@@ -1,280 +1,220 @@
 /*----- constants -----*/
-var canvas = document.querySelector('canvas');
-canvasLeft = canvas.offsetLeft;
-canvasTop = canvas.offsetTop;
-canvasProperties = [];
-let c = canvas.getContext('2d');
-
-var setCanvasSize = function() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+const sounds = {
+    gunshot:'file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Sounds/Gunshot1.mp3',
+    hillbillyYeehaw: 'file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Sounds/Hillbilly_Yeehaw.wav',
+    alien: 'file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Sounds/UFO_Ship.wav',
+    hillbillySong: 'file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Sounds/Bluegrass_Banjo_Song.wav'
 }
- setCanvasSize();
-
-//Alien Spaceship Image
-var shipImg = new Image();
-shipImg.src ="Images/Single Ship Sprite.png"
-
-var shipDimensions = {
-    width: .10 * canvas.width,
-    height: .10 * canvas.height
-};
-
-var shipLocation = {
-    x: Math.random() * (innerWidth - 58),
-    y: Math.floor(Math.random() * 401)
-};
-
-var shipSpeed = {
-    dx: 0,
-    dy: 0
-}
-
-let shipArray = [];
-let survivingShips = [];
-let shipsOnScreen = [];
-
-//Random Spaceships Generator 
-// shipImg.onload = function() {
-//     for (var i = 0; i < 2; i++) {
-//         var x = Math.random() * window.innerWidth;
-//         var y = Math.random() * window.innerHeight;
-//         c.drawImage(shipImg, x, y, 50, 50);
-//     };
-// } 
-
-//Random moving spaceships
-// var x = Math.random() * innerWidth;
-// var y = Math.floor(Math.random() * 401);
-// var dx = (Math.random() -0.5) * 8;
-// var dy = (Math.random() - 0.5) * 8
-
-let mouse = {
-    x: null,
-    y: null
-}  
-
-// class Ship {
-//     constructor(x, y, dx, dy, width, height) {
-//         this.x = x;
-//         this.y = y;
-//         this.dx = dx;
-//         this.dy = dy;
-//         this.width = .08 * canvas.width;
-//         this.height = .08 * canvas.height;
-//     }
-
-//     draw() {
-//         var shipImg = new Image();
-//         shipImg.src ="Images/Single Ship Sprite.png"; 
-//         c.drawImage(shipImg, this.x, this.y, this.width, this.height);
-
-//     }
-
-//     update() {
-//         if (this.x >= innerWidth - 58 || this.x < 0) {
-//             this.dx = -this.dx;
-//         }
-    
-//         if (this.y >= 400 || this.y < 0) {
-//             this.dy = -this.dy;
-//         }
-//         this.draw();
-//     }
-
-//     shoot() {
-//         canvas.addEventListener('click', function(e) { 
-//             mouse.x = e.clientX;
-//             mouse.y = e.clientY;
-//             console.log(mouse.x, this.x, this.x + 0.08 * canvas.width);
-//             if (mouse.x >= this.x && mouse.x < (this.x + (0.08 * canvas.width))) {
-//                 console.log("This is a hit!");
-//             } else {
-//                 console.log("This is not a hit");
-//             }            
-//         });
-//     }       
-//     die() {
-
-
-//     }
-// }
-
-function Ship(x , y, dx, dy) {
-    this.x = x;
-    this.y = y;
-    this.dx = dx;
-    this.dy = dy;
-    var continueAnimating = true;
-
-    this.draw = function() {
-        if(!continueAnimating) {return;}
-        var shipImg = new Image();
-        shipImg.src ="Images/Single Ship Sprite.png"; 
-        c.drawImage(shipImg, this.x, this.y, .08 * canvas.width, .08 * canvas.height);
-       
-    }
-
-    this.update = function() {
-        if (this.x >= innerWidth - 58 || this.x < 0) {
-            this.dx = -this.dx;
-        }
-    
-        if (this.y >= 400 || this.y < 0) {
-            this.dy = -this.dy;
-        }
-    
-        let newLocX = this.x += this.dx;
-        let newLocY = this.y += this.dy;
-
-        this.draw();
-    }
-    
-    // this.collision = function() {
-    //     if( this.x + shipDimensions.width > mouse.x && this.x < mouse.x && 
-    //         this.y + shipDimensions.height > mouse.y && this.y - shipDimensions.height < mouse.y) {
-    //             this.dx = 0;
-    //             this.dy = 0;
-    //             console.log("You have hit a ship");
-    //         }
-    // }
-
-        this.shoot = function () {
-            canvas.addEventListener('click', function(e) {
-                mouse.x = e.clientX;
-                mouse.y = e.clientY;
-                // let ship = shipArray[i];
-                let xOffset = this.x - canvasLeft;
-                let yOffset = this.y - canvasTop;
-                this.x = x;
-                this.y = y;
-                let survivingShips = [];
-                let hitShips = [];
-                // console.log("Mouse clicked on:" + mouse.x, mouse.y);
-                // console.log("The ship coordinates are: " + this.x, this.y);
-                for (var i = 0; i < shipArray.length; i++) {
-                //     // if((mouse.x < xOffset + shipDimensions.width - 48) && (xOffset - 60 < mouse.x) { 
-                //         if((mouse.y > yOffset + 30) && 
-                //         (mouse.y < yOffset + 30 + shipDimensions.height)) {
-                //             console.log("Hit a ship!");
-                //             hitShips.push(ship);
-                //             console.log(hitShips);
-                //     }
-                //      else {
-                //     console.log("Did not hit.");
-                //     survivingShips.push(ship);
-                // }
-                // console.log(this.x, this.y)
-                // console.log(, mouse.y)
-                // console.log(mouse.x, this.x,this.x + 0.08 * canvas.width);
-                console.log(mouse.x, this.x, this.x + shipDimensions.width);
-                var ship = shipArray[i];
-                if (mouse.x >= this.x && mouse.x < (this.x + shipDimensions.width - 20) 
-                    && (mouse.y >= (this.y + 70) && mouse.y < (this.y + shipDimensions.height) + 50)) {
-                // if (mouse.y >= (this.y + 80) && (mouse.y < (this.y + shipDimensions.height + 80))
-                //     && mouse.x >= (this.x + (shipDimensions.width/2)) && mouse.x < (this.x)) {
-                    console.log('Landed a hit!');
-                    hitShips.push(ship);
-                    continueAnimating = false;
-
-                } else {
-                    console.log("Miss");
-                    survivingShips.push(ship);
-                }
-                    shipsOnScreen = survivingShips;
-                }   
-            });
-        }
-        this.shoot();
-}
-
-
 
 /*----- app's state (variables) -----*/
+var shipDimensions = {
+    width: .10 * canvasWidth,
+    height: .10 * canvasHeight
+};
 
+var score = 0;
+var timeLeft = 30;
 
 /*----- cached element references -----*/
+const player = new Audio();
 
 
 /*----- event listeners -----*/
-
-//Shoot Functionality 
-// let mouse = {
-//     x: null,
-//     y: null
-
-// shipImg.isHitBy = function(x, y) {
-//     return (x >= this.x && x <= this.x + shipDimensions.x && Y >= this.y && Y <= this. Y + shipDimensions.y)
-// }
-
-// canvas.addEventListener('click', function(e) {
-//     var canvasBounds = canvas.getBoundingClientRect();
-//     var clickX = e.pageX - canvasBounds.left;
-//     var clickY = e.pageY - canvasBounds.top;
-
-//     if(shipImg.isHitBy(clickX, clickY)) {
-//         console.log("A ship was hit");
-//     }
-// })
-
-// canvas.addEventListener('click', function(e) {
-//     var ship = new Ship()
-//         if (mouse.x || mouse.y) { 
-//            var x = e.clientX,
-//                y = e.clientY
-//           if(Math.pow(x - shipDimensions.x, 2) + Math.pow(y - shipDimensions.y, 2) < Math.pow(shipDimensions.x, 2))
-            
-//         }
-//         else { 
-//           x = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft; 
-//           y = event.clientY + document.body.scrollTop + document.documentElement.scrollTop; 
-//           console.log(x, y)
-//         } 
-//         x -= canvas.offsetLeft;
-//         y -= canvas.offsetTop;
-
-//         mouse.x = event.x;
-//         mouse.y = event.y;
-//         // if(mouse.x - this.x < 50 && mouse.x - this.x > -50
-//         //     && mouse.y - this.y < 100 && mouse.y - this.y > -100) {
-//         //     console.log("You have shot a ship!");
-//         // }
-// })
-
-//Reset Button
 document.querySelector('.reset-btn').addEventListener("click", init);
 
+var canvasWidth = window.innerWidth;
+var canvasHeight = window.innerHeight;
+var can = document.querySelector('canvas');;
+var context = can.getContext("2d");
+
+// var bgImage = getBgImage();
+var shipImage = getShipImage();
+var shipsOnScreen = [];
+var lastAnimationTime = 0;
+var howLongUntilNextShip = 1000;
+var nextShipOnScreen = 0;
+var hillbillyImage = getHillbillyImage();
+
+var shipDimensions = {
+    width: .10 * canvasWidth,
+    height: .10 * canvasHeight
+};
+
+var ship = {
+    x: Math.floor(Math.random() * (.9 * canvasWidth)),
+    y: Math.floor(Math.random() * (.55 * canvasHeight)),
+    dx: (Math.random() - 1) * 3,
+    dy: (Math.random() - 1) * 3
+}
 
 /*----- functions -----*/
+function drawScore() {
+    context.font = "20px Arial white";
+    context.fillText("Score: " + score, 15, 30);
+}
+
+function drawTimer() {
+    var downloadTimer = setInterval(function() {
+        document.getElementById("timer").innerHTML = timeLeft + " seconds remaining!";
+        timeLeft -= 1;
+        if(timeLeft <= 0) {
+            clearInterval(downloadTimer);
+            document.getElementById("timer").innerHTML = "Finished!"
+        }
+    }, 1000);
+}  
+
+function startGame() {
+    var titlePage = document.querySelector('title-page')
+    var can = document.querySelector('canvas');
+    can.width  = window.innerWidth;
+    can.height = window.innerHeight;
+    var context = can.getContext("2d");
+    // titlePage.style.display = "none";
+    // context.drawImage(hillbillyImage, can.width * .2, can.height * .8);
+}
+
+function doDraw() {
+    if (timeLeft > 0) {
+        var can = document.querySelector('canvas');
+        can.width  =window.innerWidth;
+        can.height = window.innerHeight;
+        var context = can.getContext("2d");
+
+        if (new Date().getTime() - nextShipOnScreen > 0) {
+            var newShip = {
+            x: Math.floor(Math.random() * (canvasWidth)),
+            y: Math.floor(Math.random() * (.55 * canvasHeight)),
+            dx: (Math.random() - 1) * 3,
+            dy: (Math.random() - 1) * 3
+            };
+
+            shipsOnScreen.push(newShip);
+            nextShipOnScreen = new Date().getTime() + howLongUntilNextShip;
+        }
+        if (lastAnimationTime != 0) {
+            var survivingShips = [];
+            for (var i = 0; i < shipsOnScreen.length; i++) {
+                var ship = shipsOnScreen[i];
+                function update() {
+                    if (ship.x + shipDimensions.width - 60 > canvasWidth || ship.x < 0) {
+                        ship.dx = -ship.dx
+                    }
+                    if (ship.y > (canvasHeight * .60) || ship.y < 0) {
+                        ship.dy = -ship.dy;
+                    }
+                    ship.x += ship.dx;
+                    ship.y += ship.dy;
+                    }
+                context.drawImage(shipImage, ship.x , ship.y);
+                survivingShips.push(ship);
+                update();
+            }
+            shipsOnScreen = survivingShips;
+        }
+        lastAnimationTime = new Date().getTime();
+        setTimeout(function() {
+            doDraw();
+        }, 30);
+    } else {
+        for (var i = 0; i < shipsOnScreen.length; i++) {
+            var ship = shipsOnScreen[i];
+            ship.dx = 0;
+            ship.dy = 0;
+                ship.x + ship.dx;
+                ship.y + ship.dy;
+        }
+        endGame();
+    }
+}
+
+function setupClickHandler() {
+    if(timeLeft > 0) {
+        var can = document.querySelector('canvas');
+        can.onclick = function(e) {
+            var gunshot = new Audio('file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Sounds/Gunshot1.mp3');
+            gunshot.play();
+            x = e.clientX;
+            y = e.clientY;
+            var survivingShips = [];
+            for (var i = 0; i < shipsOnScreen.length; i++) {
+            var ship = shipsOnScreen[i];
+            //check to see if this ship has been shot
+            if (x > ship.x && x < ship.x + shipDimensions.width && y > (ship.y + 60) && y < ship.y + (shipDimensions.height + 33)) {
+                //ths ship will disappear because it is not inserted into the new array
+                score += 1;
+            } else {
+                survivingShips.push(ship);
+            }
+
+            }
+            shipsOnScreen = survivingShips;
+        };
+    } else {
+        return score;
+    }
+}    
+
+function endGame() {
+    console.log("The game has ended!");
+    context.drawImage(hillbillyImage, canvasWidth * .7, canvasHeight * .6);
+    context.font = "30px DriftType Regular";
+    context.fillText(`You done shot ${score} of them buggers!`,canvasWidth * .2, canvasHeight * .2);
+}
+
+function getShipImage() {
+  var shipImg = new Image(50, 50);
+  shipImg.src = "Images/Single Ship Sprite.png";
+  return shipImg;
+}
+
+function getHillbillyImage() {
+    var hillbillyImage = new Image (10, 10);
+    hillbillyImage.src = "file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Images/Cartoon_hillbilly_with_rifle.png";
+    return hillbillyImage;
+}
+
+function hillbillyYeehaw() {
+    if(timeLeft > 0) {
+    var hillbillyYeehaw = new Audio('file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Sounds/Hillbilly_Yeehaw.wav');
+    setInterval(() => {
+        hillbillyYeehaw.play();
+    }, 15000)
+    } else {
+    //STOP THE SOUND//
+    }   
+} 
+
+
+ function alienSound() {
+     if(timeLeft > 0) {
+     var alienSound = new Audio('file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Sounds/UFO_Ship.wav');
+     setInterval(() => {
+         alienSound.play();
+     }, 10000)
+    } else {
+        //STOP THE SOUND//
+    } 
+}    
+     
 function animate() {
     requestAnimationFrame(animate);
-    c.clearRect(0, 0, innerWidth, innerHeight);
-    for (var i = 0; i < shipArray.length; i++) {
-        shipArray[i].draw();
-        shipArray[i].update();
-        shipArray[i].shoot();
-    }
-}
-animate();
+        drawScore();
+}     
 
-//Ships Getting shot
-function die() {
-
-}
-
-function changeImg() {
-
-}
-//Can adjust the velocity and # of ships here//
 function init() {
-    shipArray = [];
-    for (var i = 0; i < 2; i++) {
-        var x = Math.random() * (innerWidth - 58);
-        var y = Math.floor(Math.random() * 401);
-        var dx = (Math.random() - 0.5) * shipSpeed.dx;
-        var dy = (Math.random() - 0.5) * shipSpeed.dy;
-        shipArray.push(new Ship(x, y, dx, dy));
-    }
+    context.clearRect(0, 0, canvasWidth, canvasHeight);
+    hillbillyYeehaw();
+    alienSound();
+    startGame();
+    // endGame();
+    drawTimer();
+    // getHillbillyImage();
+    // init();
+    doDraw(); 
+    setupClickHandler();
+    animate();
 }
 
 init();
+
