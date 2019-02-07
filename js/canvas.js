@@ -13,7 +13,7 @@ var shipDimensions = {
 };
 
 var score = 0;
-var timeLeft = 30;
+var timeLeft = 5;
 
 /*----- cached element references -----*/
 const player = new Audio();
@@ -83,7 +83,7 @@ function doDraw() {
 
         if (new Date().getTime() - nextShipOnScreen > 0) {
             var newShip = {
-            x: Math.floor(Math.random() * (canvasWidth)),
+            x: Math.floor(Math.random() * (.9 * canvasWidth)),
             y: Math.floor(Math.random() * (.55 * canvasHeight)),
             dx: (Math.random() - 1) * 3,
             dy: (Math.random() - 1) * 3
@@ -157,13 +157,13 @@ function setupClickHandler() {
 
 function endGame() {
     console.log("The game has ended!");
-    context.drawImage(hillbillyImage, canvasWidth * .7, canvasHeight * .6);
-    context.font = "30px DriftType Regular";
-    context.fillText(`You done shot ${score} of them buggers!`,canvasWidth * .2, canvasHeight * .2);
+    context.drawImage(hillbillyImage, canvasWidth * .7, canvasHeight * .45);
+    context.font = "40px DriftType Regular";
+    context.fillText(`You done shawt ${score} uv 'dem buggers!`,canvasWidth * .2, canvasHeight * .2);
 }
 
 function getShipImage() {
-  var shipImg = new Image(50, 50);
+  var shipImg = new Image(.1 * canvasWidth, .1 * canvasHeight);
   shipImg.src = "Images/Single Ship Sprite.png";
   return shipImg;
 }

@@ -20,12 +20,13 @@ body {
 
 .canvas {
     border: 10px solid black;
-    margin: 0px 10% auto;
     background-size: cover;
     cursor: url(file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Images/Crosshair.png) 30 30, crosshair;
     background-image: url("file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Images/Background.png");
     background-size: 100% 100% no-repeat;
     background-color: white;
+    width: 1000px;
+    height: 700px;
 }   
 
 .canvas-container {
