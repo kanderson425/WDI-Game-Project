@@ -16,11 +16,12 @@ body {
 
 .canvas {
     border: 10px solid black;
-    margin: 0px;
+    margin: 0px 40px;
     background-size: cover;
     cursor: url(file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Images/Crosshair.png) 30 30, crosshair;
     background-image: url("file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Images/Background.png");
-    background-size: 100% 100%;
+    background-size: 100% 100% no-repeat;
+    background-color: white;
 }   
 
 .canvas-container {
@@ -39,9 +40,9 @@ nav {
 }
 
 .bottom-bar {
-    /* display: flex;
+    display: flex;
     flex-direction: row;
-    justify-content: space-between; */
+    justify-content: space-between;
     font-size: 10px;
     margin: 0px 20px; 
 }
@@ -49,6 +50,16 @@ nav {
 h1 {
     font-size: 40px;
     margin: 5px 10px;
+}
+
+#timer {
+    font-size: 15px;
+    color: white;
+    background-color: black;
+    border-radius: 5px;
+    margin: 20px 30px;
+    padding: 5px;
+    display: block;
 }
 
 .drifttype {
@@ -60,12 +71,12 @@ h1 {
 }
 
 .reset-btn {
-    font-size: 20px;
+    font-size: 25px;
     border-radius: 5px;
     margin-left: 30px;
     color: black;
     border: solid black 5px;
-    padding: 5px;
+    padding: 10px;
     outline: none;
     margin: 0px 50px;
 }

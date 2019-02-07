@@ -268,7 +268,7 @@ function changeImg() {
 //Can adjust the velocity and # of ships here//
 function init() {
     shipArray = [];
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 2; i++) {
         var x = Math.random() * (innerWidth - 58);
         var y = Math.floor(Math.random() * 401);
         var dx = (Math.random() - 0.5) * shipSpeed.dx;
