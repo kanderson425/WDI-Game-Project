@@ -25,8 +25,8 @@ body {
     background-image: url("file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Images/Background.png");
     background-size: 100% 100% no-repeat;
     background-color: white;
-    width: 1000px;
-    height: 700px;
+    /* width: 1000px;
+    height: 700px; */
 }   
 
 .canvas-container {

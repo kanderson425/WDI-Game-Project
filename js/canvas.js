@@ -13,7 +13,7 @@ var shipDimensions = {
 };
 
 var score = 0;
-var timeLeft = 5;
+var timeLeft = 30;
 
 /*----- cached element references -----*/
 const player = new Audio();
@@ -31,7 +31,7 @@ var context = can.getContext("2d");
 var shipImage = getShipImage();
 var shipsOnScreen = [];
 var lastAnimationTime = 0;
-var howLongUntilNextShip = 1000;
+var howLongUntilNextShip = 500;
 var nextShipOnScreen = 0;
 var hillbillyImage = getHillbillyImage();
 
@@ -137,10 +137,13 @@ function setupClickHandler() {
             x = e.clientX;
             y = e.clientY;
             var survivingShips = [];
+            console.log(window.innerWidth, window.innerHeight);
             for (var i = 0; i < shipsOnScreen.length; i++) {
             var ship = shipsOnScreen[i];
+            console.log("Mouse X = " + e.clientX + " X = " + (ship.x + 200) + " X + width = " + (ship.x + shipDimensions.width + 60 + 
+                " Mouse Y = " + e.clientY + " Y = " + (ship.y + 70) + " Y + Height  = " + (ship.y + shipDimensions.height + 60)));
             //check to see if this ship has been shot
-            if (x > ship.x && x < ship.x + shipDimensions.width && y > (ship.y + 60) && y < ship.y + (shipDimensions.height + 33)) {
+            if (x > ship.x && x < (ship.x + shipDimensions.width) && y > (ship.y + 70) && y < ship.y + (shipDimensions.height + 60)) {
                 //ths ship will disappear because it is not inserted into the new array
                 score += 1;
             } else {
@@ -157,8 +160,8 @@ function setupClickHandler() {
 
 function endGame() {
     console.log("The game has ended!");
-    context.drawImage(hillbillyImage, canvasWidth * .7, canvasHeight * .45);
-    context.font = "40px DriftType Regular";
+    context.drawImage(hillbillyImage, canvasWidth * .7, canvasHeight * .7);
+    context.font = "30px DriftType Regular";
     context.fillText(`You done shawt ${score} uv 'dem buggers!`,canvasWidth * .2, canvasHeight * .2);
 }
 
@@ -204,6 +207,7 @@ function animate() {
 
 function init() {
     context.clearRect(0, 0, canvasWidth, canvasHeight);
+    score = 0;
     hillbillyYeehaw();
     alienSound();
     startGame();
