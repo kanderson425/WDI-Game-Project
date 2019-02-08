@@ -20,7 +20,7 @@ const player = new Audio();
 
 
 /*----- event listeners -----*/
-document.querySelector('.reset-btn').addEventListener("click", init);
+document.querySelector('.reset-btn').addEventListener("click", reload);
 
 var canvasWidth = window.innerWidth;
 var canvasHeight = window.innerHeight;
@@ -204,6 +204,10 @@ function animate() {
     requestAnimationFrame(animate);
         drawScore();
 }     
+
+function reload() {
+    window.location.reload();
+}
 
 function init() {
     context.clearRect(0, 0, canvasWidth, canvasHeight);
