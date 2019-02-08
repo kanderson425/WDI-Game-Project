@@ -1,4 +1,4 @@
-/*----- constants -----*/
+
 const sounds = {
     gunshot:'file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Sounds/Gunshot1.mp3',
     hillbillyYeehaw: 'file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Sounds/Hillbilly_Yeehaw.wav',
@@ -6,7 +6,7 @@ const sounds = {
     hillbillySong: 'file:///Users/kyleanderson/git/WDI/WDI-Game-Project/Sounds/Bluegrass_Banjo_Song.wav'
 }
 
-/*----- app's state (variables) -----*/
+
 var shipDimensions = {
     width: .10 * canvasWidth,
     height: .10 * canvasHeight
@@ -15,11 +15,9 @@ var shipDimensions = {
 var score = 0;
 var timeLeft = 30;
 
-/*----- cached element references -----*/
+
 const player = new Audio();
 
-
-/*----- event listeners -----*/
 document.querySelector('.reset-btn').addEventListener("click", reload);
 
 var canvasWidth = window.innerWidth;
@@ -161,7 +159,7 @@ function setupClickHandler() {
 function endGame() {
     console.log("The game has ended!");
     context.drawImage(hillbillyImage, canvasWidth * .7, canvasHeight * .7);
-    context.font = "30px DriftType Regular";
+    context.font = "40px DriftType Regular";
     context.fillText(`You done shawt ${score} uv 'dem buggers!`,canvasWidth * .2, canvasHeight * .2);
 }
 
@@ -187,7 +185,6 @@ function hillbillyYeehaw() {
     //STOP THE SOUND//
     }   
 } 
-
 
  function alienSound() {
      if(timeLeft > 0) {
@@ -223,6 +220,7 @@ function init() {
     setupClickHandler();
     animate();
 }
+
 
 init();
 

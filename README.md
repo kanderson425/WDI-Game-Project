@@ -14,8 +14,7 @@ In the backwoods of Appalachia, you and your clan of hillbilly cousins are livin
 With your handy-dandy rifle you are taking matters into your own hands and protecting your property!
 
 # Game Wireframe
-![alt Wireframe mock-up for the Hillbillies vs. Aliens! game] 
-<img src="raw.githubusercontent.com/kanderson425/WDI-Game-Project/Images/Game_Project_Wireframe.png?sanitize=true&raw=true" />
+<img width="1677" alt="game_project_wireframe" src="https://user-images.githubusercontent.com/46425993/52488885-7e888900-2b86-11e9-94e7-f0fbda33c38d.png">
 
 # Technologies Used
 HTML/HTML - Canvas/CSS/JavaScript
